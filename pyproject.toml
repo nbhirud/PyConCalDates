@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pyconcaldates"
+version = "0.1.0"
+description = "Extract dates from contacts and add them to calendar"
+authors = ["Nikhil Bhirud <12810336+nbhirud@users.noreply.github.com>"]
+license = "GNU GENERAL PUBLIC LICENSE Version 3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
