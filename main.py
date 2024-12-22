@@ -1,8 +1,11 @@
 
-import numpy as np
- 
+import pandas as pd
+
+# Extract dates from contacts and add them to calendar 
+# GNU GENERAL PUBLIC LICENSE Version 3
+
 # using loadtxt()
-arr = np.loadtxt("sample_data.csv",
-                 delimiter=",", dtype=str)
+arr = pd.read_csv("data/contacts.csv")
 print(arr)
+df.select_dtypes(include=['datetime64'])
 
