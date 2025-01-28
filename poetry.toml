@@ -1,0 +1,6 @@
+[virtualenvs]
+create = true
+in-project = true
+
+[requests]
+max-retries = 2
