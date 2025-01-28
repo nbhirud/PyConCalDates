@@ -5,7 +5,6 @@ description = "Extract dates from contacts and add them to calendar"
 authors = ["Nikhil Bhirud <12810336+nbhirud@users.noreply.github.com>"]
 license = "GNU GENERAL PUBLIC LICENSE Version 3"
 readme = "README.md"
-# packages = [{ include = duckdb }]
 
 
 [tool.poetry.dependencies]
