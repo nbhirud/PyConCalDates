@@ -32,15 +32,15 @@ def duck_read(csv_path: str):  # -> duckdb.duckdb.DuckDBPyRelation:
 
 def duck_csv_to_db(csv_path: str):
     with duckdb.connect(DUCKDB_FILEPATH) as conn:
-        # conn.sql('''
-        #     INSERT INTO contacts
-        #     SELECT * FROM read_csv_auto(csv_path)
-        # ''')
         conn.sql("""
             CREATE OR REPLACE TABLE contacts AS
             SELECT * FROM 'data/contacts.csv';
         """)
 
+        # conn.execute("CREATE OR REPLACE TABLE contacts AS SELECT * FROM $csv_path;", {"csv_path": csv_path})
+        # conn.execute("CREATE OR REPLACE TABLE contacts AS SELECT * FROM '?';", [csv_path])
+        # con.execute("SELECT item FROM items WHERE value > ?", [400])
+        # print(con.fetchall())
         conn.commit()
 
 def duck_run_query(sql_query: str):
