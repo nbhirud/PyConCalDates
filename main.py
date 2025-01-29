@@ -1,4 +1,5 @@
 from pyconcaldates.duck_reader import duck_read
+
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
 
@@ -7,11 +8,10 @@ import duckdb
 # TODO - bandit (security checker?)
 
 
-# Extract dates from contacts and add them to calendar 
+# Extract dates from contacts and add them to calendar
 # GNU GENERAL PUBLIC LICENSE Version 3
 
 contacts_csv: str = "data/contacts.csv"
-
 
 
 ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(contacts_csv)
