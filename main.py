@@ -1,4 +1,4 @@
-from pyconcaldates.duck_operations import duck_read
+from pyconcaldates.duck_operations import duck_read, duck_csv_to_db
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
@@ -13,7 +13,37 @@ import duckdb
 
 contacts_csv: str = "data/contacts.csv"
 
+duck_csv_to_db(contacts_csv)
 
 ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(contacts_csv)
-print(type(ddb))
-print(ddb)
+
+# print(type(ddb))
+# print(ddb)
+# ddb.show()
+
+# print(ddb.types)
+# print(ddb.columns)
+
+ddb2: duckdb.duckdb.DuckDBPyRelation = ddb.select(
+    "First Name",
+    "Middle Name",
+    "Last Name",
+    "Birthday",
+    "Event 1 - Label",
+    "Event 1 - Value",
+    "Custom Field 1 - Label",
+    "Custom Field 1 - Value",
+)
+# ddb2.
+# ddb2.show()
+
+# ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql_query('SELECT * FROM ddb2 WHERE Birthday NOTNULL OR \"Event 1 - Value\" NOTNULL OR \"Custom Field 1 - Value\" NOTNULL')
+# ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql('SELECT * FROM ddb2 WHERE Birthday NOTNULL ')
+
+
+# ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.bool_and('Birthday')
+# ddb3.show()
+
+# print(ddb2.describe())
+# duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
+# ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
