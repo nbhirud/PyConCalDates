@@ -1,13 +1,19 @@
 from pyconcaldates.duck_reader import duck_read
-# 
 
-# Extract dates from contacts and add them to calendar 
+# from duckdb.duckdb import DuckDBPyRelation
+import duckdb
+
+# TODO - mypy (static type checker)
+# TODO - ruff (linter, formatter)(instead of Flake8, isort, and Black - check if it can really do black's work)
+# TODO - bandit (security checker?)
+
+
+# Extract dates from contacts and add them to calendar
 # GNU GENERAL PUBLIC LICENSE Version 3
 
-contacts_csv = "data/contacts.csv"
+contacts_csv: str = "data/contacts.csv"
 
 
-
-ddb = duck_read(contacts_csv)
+ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(contacts_csv)
 print(type(ddb))
 print(ddb)
