@@ -19,3 +19,53 @@ black = "^24.10.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[project]
+# Support Python 3.13+.
+requires-python = ">=3.13"
+
+
+[tool.ruff]
+# Set the maximum line length. Default value: 88
+line-length = 88
+exclude = [".venv", "venv", ".git", ".mypy_cache", ".pytype", ".ruff_cache", "__pypackages__"]
+fix = true
+# Enumerate all fixed violations.
+show-fixes = true
+# Whether to automatically exclude files that are ignored by .ignore, .gitignore, .git/info/exclude, and global gitignore files. Default true
+respect-gitignore = false
+
+[tool.ruff.lint]
+# A list of rule codes or prefixes to consider fixable. By default, all rules are considered fixable.
+fixable = ["ALL"]
+
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+force-wrap-aliases = true
+combine-as-imports = true
+
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 100
+
+
+[tool.ruff.lint.pydocstyle]
+# "google" | "numpy" | "pep257"
+convention = "pep257"
+
+
+[tool.ruff.format]
+# Enable reformatting of code snippets in docstrings.
+docstring-code-format = true
+indent-style = "space"
+# Use `\n` line endings for all files.  Line endings will be converted to \n. The default line ending on Unix.
+line-ending = "lf"
+# Whether to enable the unstable preview style formatting.
+preview = true
+
+[tool.ruff.analyze]
+detect-string-imports = true
+# When preview mode is enabled, Ruff will expose unstable commands.
+preview = true
