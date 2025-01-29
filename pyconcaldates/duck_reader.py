@@ -1,5 +1,6 @@
-from duckdb import read_csv
-from duckdb.duckdb import DuckDBPyRelation
+# from duckdb import read_csv
+# from duckdb.duckdb import DuckDBPyRelation
+import duckdb
 # import pandas as pd
 # import duckdb
 
@@ -10,8 +11,8 @@ from duckdb.duckdb import DuckDBPyRelation
 
 
 
-def duck_read(csv_path: str) -> DuckDBPyRelation:
-    ddb = read_csv(csv_path)
+def duck_read(csv_path: str) -> duckdb.duckdb.DuckDBPyRelation:
+    ddb = duckdb.read_csv(csv_path)
     return ddb
 
 # import duckdb
