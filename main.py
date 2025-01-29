@@ -1,4 +1,4 @@
-from pyconcaldates.duck_reader import duck_read
+from pyconcaldates.duck_operations import duck_read
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb

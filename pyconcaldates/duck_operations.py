@@ -15,6 +15,8 @@ def duck_read(csv_path: str) -> duckdb.duckdb.DuckDBPyRelation:
     ddb = duckdb.read_csv(csv_path)
     return ddb
 
+# CREATE TABLE new_tbl AS
+    # SELECT * FROM read_csv('input.csv');
 
 # import duckdb
 # import pandas as pd
