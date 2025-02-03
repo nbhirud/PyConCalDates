@@ -17,20 +17,27 @@ DUCKDB_FILEPATH = "data/contacts.ddb"
 
 
 def get_duck_connection() -> duckdb.DuckDBPyConnection | None:
+    """Create and return an in-memory DuckDB connection"""
     try:
+        # btw duckdb.connect() would also create in-memory db
         con = duckdb.connect(database=":memory:")  # in-memory db
         logging.info("Connected successfully to in-memory DuckDB")
         return con
-    except Exception:
-        logging.exception("Connection to in-memory DuckDB unsuccessful")
+    except Exception as ex:
+        logging.exception(f"Connection to in-memory DuckDB unsuccessful. {ex}")
         return None
 
 
-def duck_read(csv_path: str):  # -> duckdb.duckdb.DuckDBPyRelation:
-    # con = get_duck_connection()
-    ddb = duckdb.from_csv_auto(csv_path)
-    # ddb.to_table(DUCKDB_FILEPATH)
-    return ddb
+def duck_read(con: duckdb.DuckDBPyConnection, csv_path: str):  # -> duckdb.duckdb.DuckDBPyRelation:
+    """Read csv and load into the in-memory DuckDB"""
+    try:
+        # ddb = duckdb.from_csv_auto(csv_path)
+        # ddb.to_table(DUCKDB_FILEPATH)
+        con.execute(f"CREATE TABLE contacts AS SELECT * FROM read_csv_auto('{csv_path}')")
+        logging.info("csv read and loaded into in-memory DuckDB successfully")
+    except Exception as ex:
+        logging.exception(f"loading csv into db failed. {ex}")
+
 
 
 def duck_csv_to_db(csv_path: str):
