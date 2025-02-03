@@ -2,11 +2,13 @@
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
 import logging
+from pathlib import Path
+
 
 # import pandas as pd
 
 # from duck_constants import DUCKDB_FILEPATH
-DUCKDB_FILEPATH = "data/contacts.ddb"
+# DUCKDB_FILEPATH = "data/contacts.ddb"
 
 # using loadtxt()
 # arr = pd.read_csv(contacts_csv)
@@ -29,7 +31,7 @@ def get_duck_connection() -> duckdb.DuckDBPyConnection | None:
 
 
 def duck_read(
-    con: duckdb.DuckDBPyConnection, csv_path: str
+    con: duckdb.DuckDBPyConnection, csv_path: Path
 ):  # -> duckdb.duckdb.DuckDBPyRelation:
     """Read csv and load into the in-memory DuckDB"""
     try:
@@ -43,7 +45,7 @@ def duck_read(
         logging.exception(f"loading csv into db failed. {ex}")
 
 
-# def duck_csv_to_db(csv_path: str):
+# def duck_csv_to_db(csv_path: Path):
 #     with duckdb.connect(DUCKDB_FILEPATH) as conn:
 #         conn.sql(
 #             """
@@ -73,28 +75,12 @@ def duck_run_query(
         return None
 
 
-# SELECT     "First Name",
-#     "Middle Name",
-#     "Last Name",
-#     "Birthday",
-#     "Event 1 - Label",
-#     "Event 1 - Value",
-#     "Custom Field 1 - Label",
-#     "Custom Field 1 - Value"
-#     FROM contacts
-#     WHERE "Birthday" NOTNULL
-#     OR "Event 1 - Label" NOTNULL
-#     OR "Event 1 - Value" NOTNULL
-#     OR "Custom Field 1 - Label" NOTNULL
-#     OR "Custom Field 1 - Value" NOTNULL;
+# def duck_to_csv(con: duckdb.DuckDBPyConnection) -> str | None:
+#     """Create new csv with all data in DuckDB contacts table"""
+#     try:
+#         date_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+#         con.execute("")
 
-
-# def duck_csv_to_table(csv_path: str):
-#     DUCKDB_FILEPATH
-# CREATE TABLE new_tbl AS
-# SELECT * FROM read_csv('input.csv');
-
-# import duckdb
-# import pandas as pd
-# pandas_df = pd.DataFrame({"a": [42]})
-# duckdb.sql("SELECT * FROM pandas_df")
+#     except Exception as ex:
+#         logging.exception(f"Failed to export DuckDB contacts to csv. {ex}")
+#         return None

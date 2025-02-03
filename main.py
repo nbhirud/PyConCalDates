@@ -2,6 +2,7 @@ from pyconcaldates.duck_operations import duck_read, get_duck_connection, duck_r
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
+from pathlib import Path
 
 # TODO - mypy (static type checker)
 # TODO - ruff (linter, formatter)(instead of Flake8, isort, and Black - check if it can really do black's work)
@@ -10,8 +11,12 @@ import duckdb
 
 # Extract dates from contacts and add them to calendar
 # GNU GENERAL PUBLIC LICENSE Version 3
-
-csv_path: str = "data/contacts.csv"
+BASEPATH: Path = Path.cwd()
+DATAPATH: Path = BASEPATH.joinpath("data")
+MAINCSVPATH: Path = DATAPATH.joinpath("contacts.csv")
+# data_path : str = "data/"
+# csv_path: str = "data/contacts.csv"
+# print(f"CSVPATH = {type(MAINCSVPATH)}")
 
 # duck_csv_to_db(csv_path)
 
@@ -20,7 +25,7 @@ csv_path: str = "data/contacts.csv"
 
 con: duckdb.DuckDBPyConnection | None = get_duck_connection()
 if con:
-    duck_read(con, csv_path)
+    duck_read(con, MAINCSVPATH)
 
     # print(type(ddb))
     # print(ddb)
@@ -59,3 +64,18 @@ if con:
         # print(ddb2.describe())
         # duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
         # ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
+
+        # SELECT     "First Name",
+        #     "Middle Name",
+        #     "Last Name",
+        #     "Birthday",
+        #     "Event 1 - Label",
+        #     "Event 1 - Value",
+        #     "Custom Field 1 - Label",
+        #     "Custom Field 1 - Value"
+        #     FROM contacts
+        #     WHERE "Birthday" NOTNULL
+        #     OR "Event 1 - Label" NOTNULL
+        #     OR "Event 1 - Value" NOTNULL
+        #     OR "Custom Field 1 - Label" NOTNULL
+        #     OR "Custom Field 1 - Value" NOTNULL;
