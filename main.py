@@ -1,4 +1,4 @@
-from pyconcaldates.duck_operations import duck_read, duck_csv_to_db, get_duck_connection
+from pyconcaldates.duck_operations import duck_read, get_duck_connection
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
@@ -13,9 +13,8 @@ import duckdb
 
 csv_path: str = "data/contacts.csv"
 
-duck_csv_to_db(csv_path)
+# duck_csv_to_db(csv_path)
 
-# FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
 # ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(csv_path)
 # ddb = duckdb.duckdb.DuckDBPyRelation = duck_read_local_db()
 
@@ -30,7 +29,8 @@ if con:
     # print(ddb.types)
     # print(ddb.columns)
 
-    ddb = con.sql("""SELECT * FROM contacts;""")
+    # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
+    ddb: duckdb.duckdb.DuckDBPyRelation  = con.sql("""SELECT * FROM contacts;""")
 
     # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
     ddb2: duckdb.duckdb.DuckDBPyRelation = ddb.select(
