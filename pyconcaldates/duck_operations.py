@@ -2,6 +2,7 @@
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
 import logging
+from datetime import datetime
 from pathlib import Path
 
 
@@ -75,12 +76,19 @@ def duck_run_query(
         return None
 
 
-# def duck_to_csv(con: duckdb.DuckDBPyConnection) -> str | None:
-#     """Create new csv with all data in DuckDB contacts table"""
-#     try:
-#         date_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-#         con.execute("")
+def duck_to_csv(con: duckdb.DuckDBPyConnection, export_base_path: Path, export_filename:str = None) -> str | None:
+    """Create new csv with all data in DuckDB contacts table"""
+    try:
+        output_path: Path = None
+        if export_filename:
+            output_path = export_base_path.joinpath(export_filename)
+        else:
+            date_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_path = export_base_path.joinpath(f"new_contacts_{date_time}.csv")
 
-#     except Exception as ex:
-#         logging.exception(f"Failed to export DuckDB contacts to csv. {ex}")
-#         return None
+        con.execute(f"COPY (SELECT * FROM contacts) TO '{output_path}' (FORMAT CSV, HEADER TRUE)")
+        logging.info(f"contacts table exported to {output_path}")
+
+    except Exception as ex:
+        logging.exception(f"Failed to export DuckDB contacts to csv. {ex}")
+        return None
