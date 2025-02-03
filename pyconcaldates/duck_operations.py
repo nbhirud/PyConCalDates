@@ -2,6 +2,7 @@
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
 import logging
+
 # import pandas as pd
 
 # from duck_constants import DUCKDB_FILEPATH
@@ -14,12 +15,13 @@ DUCKDB_FILEPATH = "data/contacts.ddb"
 
 # TODO - dbckdb singleton connection
 
+
 def get_duck_connection() -> duckdb.DuckDBPyConnection:
     try:
         con = duckdb.connect(database=":memory:")  # in-memory db
         logging.info("Connected successfully to in-memory DuckDB")
         return con
-    except Exception as ex:
+    except Exception:
         logging.exception("Connection to in-memory DuckDB unsuccessful")
         return None
 
@@ -33,10 +35,12 @@ def duck_read(csv_path: str):  # -> duckdb.duckdb.DuckDBPyRelation:
 
 def duck_csv_to_db(csv_path: str):
     with duckdb.connect(DUCKDB_FILEPATH) as conn:
-        conn.sql("""
+        conn.sql(
+            """
             CREATE OR REPLACE TABLE contacts AS
             SELECT * FROM 'data/contacts.csv';
-        """)
+        """
+        )
 
         # conn.execute("CREATE OR REPLACE TABLE contacts AS SELECT * FROM $csv_path;", {"csv_path": csv_path})
         # conn.execute("CREATE OR REPLACE TABLE contacts AS SELECT * FROM '?';", [csv_path])
@@ -44,15 +48,12 @@ def duck_csv_to_db(csv_path: str):
         # print(con.fetchall())
         conn.commit()
 
+
 def duck_run_query(sql_query: str):
     result = None
     with duckdb.connect(DUCKDB_FILEPATH) as conn:
-        result = conn.sql(
-            sql_query
-        )
+        result = conn.sql(sql_query)
     return result
-
-
 
 
 # SELECT     "First Name",
@@ -62,15 +63,13 @@ def duck_run_query(sql_query: str):
 #     "Event 1 - Label",
 #     "Event 1 - Value",
 #     "Custom Field 1 - Label",
-#     "Custom Field 1 - Value" 
+#     "Custom Field 1 - Value"
 #     FROM contacts
 #     WHERE "Birthday" NOTNULL
 #     OR "Event 1 - Label" NOTNULL
 #     OR "Event 1 - Value" NOTNULL
 #     OR "Custom Field 1 - Label" NOTNULL
 #     OR "Custom Field 1 - Value" NOTNULL;
-
-
 
 
 # def duck_csv_to_table(csv_path: str):
