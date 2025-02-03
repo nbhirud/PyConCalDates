@@ -1,6 +1,7 @@
 # from duckdb import read_csv
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
+import logging
 
 # from duck_constants import DUCKDB_FILEPATH
 DUCKDB_FILEPATH = "data/contacts.ddb"
@@ -19,8 +20,13 @@ DUCKDB_FILEPATH = "data/contacts.ddb"
 
 
 def get_duck_connection() -> duckdb.DuckDBPyConnection:
-    con = duckdb.connect()  # in-memory db
-    return con
+    try:
+        con = duckdb.connect(database=":memory:")  # in-memory db
+        logging.info("Connected successfully to in-memory DuckDB")
+        return con
+    except Exception as ex:
+        logging.exception("Connection to in-memory DuckDB unsuccessful")
+        return None
 
 
 def duck_read(csv_path: str):  # -> duckdb.duckdb.DuckDBPyRelation:
