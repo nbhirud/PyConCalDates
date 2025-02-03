@@ -31,28 +31,31 @@ if con:
 
     # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
     # ddb: duckdb.duckdb.DuckDBPyRelation  = con.sql("""SELECT * FROM contacts;""")
-    ddb = duck_run_query(con, """SELECT * FROM contacts;""")
-
-    # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
-    ddb2: duckdb.duckdb.DuckDBPyRelation = ddb.select(
-        "First Name",
-        "Middle Name",
-        "Last Name",
-        "Birthday",
-        "Event 1 - Label",
-        "Event 1 - Value",
-        "Custom Field 1 - Label",
-        "Custom Field 1 - Value",
+    ddb: duckdb.duckdb.DuckDBPyRelation | None = duck_run_query(
+        con, """SELECT * FROM contacts;"""
     )
-    # ddb2.
-    ddb2.show()
 
-    # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql_query('SELECT * FROM ddb2 WHERE Birthday NOTNULL OR \"Event 1 - Value\" NOTNULL OR \"Custom Field 1 - Value\" NOTNULL')
-    # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql('SELECT * FROM ddb2 WHERE Birthday NOTNULL ')
+    if ddb:
+        # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
+        ddb2: duckdb.duckdb.DuckDBPyRelation = ddb.select(
+            "First Name",
+            "Middle Name",
+            "Last Name",
+            "Birthday",
+            "Event 1 - Label",
+            "Event 1 - Value",
+            "Custom Field 1 - Label",
+            "Custom Field 1 - Value",
+        )
+        # ddb2.
+        ddb2.show()
 
-    # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.bool_and('Birthday')
-    # ddb3.show()
+        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql_query('SELECT * FROM ddb2 WHERE Birthday NOTNULL OR \"Event 1 - Value\" NOTNULL OR \"Custom Field 1 - Value\" NOTNULL')
+        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql('SELECT * FROM ddb2 WHERE Birthday NOTNULL ')
 
-    # print(ddb2.describe())
-    # duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
-    # ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
+        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.bool_and('Birthday')
+        # ddb3.show()
+
+        # print(ddb2.describe())
+        # duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
+        # ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
