@@ -2,22 +2,17 @@
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
 import logging
+# import pandas as pd
 
 # from duck_constants import DUCKDB_FILEPATH
 DUCKDB_FILEPATH = "data/contacts.ddb"
-# import pandas as pd
-# import duckdb
 
 # using loadtxt()
 # arr = pd.read_csv(contacts_csv)
 # print(arr)
 # df.select_dtypes(include=['datetime64'])
 
-# dbckdb singleton connection
-
-# con = duckdb.connect("file.db") # creates persistant db
-# con = duckdb.connect() # creates in-memory db
-
+# TODO - dbckdb singleton connection
 
 def get_duck_connection() -> duckdb.DuckDBPyConnection:
     try:
