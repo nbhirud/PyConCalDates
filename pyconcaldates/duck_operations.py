@@ -59,11 +59,19 @@ def duck_read(
 #         conn.commit()
 
 
-def duck_run_query(sql_query: str):
-    result = None
-    with duckdb.connect(DUCKDB_FILEPATH) as conn:
-        result = conn.sql(sql_query)
-    return result
+def duck_run_query(con: duckdb.DuckDBPyConnection, sql_query: str) -> duckdb.duckdb.DuckDBPyRelation | None:
+    """Run the requested query on DuckDB and return the result"""
+    try:
+        # result = None
+        # with duckdb.connect(DUCKDB_FILEPATH) as conn:
+        #     result = conn.sql(sql_query)
+        # return result
+        logging.info(f"query executed successfully: {sql_query}")
+        return con.execute(sql_query)
+        
+    except Exception as ex:
+        logging.exception(f"Failed to run the query on DuckDB. {ex}")
+        return None
 
 
 # SELECT     "First Name",

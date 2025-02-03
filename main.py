@@ -1,4 +1,4 @@
-from pyconcaldates.duck_operations import duck_read, get_duck_connection
+from pyconcaldates.duck_operations import duck_read, get_duck_connection, duck_run_query
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
@@ -30,7 +30,8 @@ if con:
     # print(ddb.columns)
 
     # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
-    ddb: duckdb.duckdb.DuckDBPyRelation  = con.sql("""SELECT * FROM contacts;""")
+    # ddb: duckdb.duckdb.DuckDBPyRelation  = con.sql("""SELECT * FROM contacts;""")
+    ddb = duck_run_query(con, """SELECT * FROM contacts;""")
 
     # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
     ddb2: duckdb.duckdb.DuckDBPyRelation = ddb.select(
