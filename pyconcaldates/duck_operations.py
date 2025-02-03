@@ -16,7 +16,7 @@ DUCKDB_FILEPATH = "data/contacts.ddb"
 # TODO - dbckdb singleton connection
 
 
-def get_duck_connection() -> duckdb.DuckDBPyConnection:
+def get_duck_connection() -> duckdb.DuckDBPyConnection | None:
     try:
         con = duckdb.connect(database=":memory:")  # in-memory db
         logging.info("Connected successfully to in-memory DuckDB")

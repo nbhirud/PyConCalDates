@@ -15,6 +15,7 @@ csv_path: str = "data/contacts.csv"
 
 duck_csv_to_db(csv_path)
 
+# FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
 ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(csv_path)
 # ddb = duckdb.duckdb.DuckDBPyRelation = duck_read_local_db()
 
@@ -25,6 +26,7 @@ ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(csv_path)
 # print(ddb.types)
 # print(ddb.columns)
 
+# FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
 ddb2: duckdb.duckdb.DuckDBPyRelation = ddb.select(
     "First Name",
     "Middle Name",
