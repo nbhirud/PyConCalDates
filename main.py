@@ -1,4 +1,8 @@
-from pyconcaldates.duck_operations import duck_read, get_duck_connection, duck_run_query, duck_to_csv
+from pyconcaldates.duck_operations import (
+    duck_read,
+    get_duck_connection,
+    duck_run_query,
+)  # , duck_to_csv
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
@@ -13,7 +17,9 @@ from pathlib import Path
 # GNU GENERAL PUBLIC LICENSE Version 3
 BASEPATH: Path = Path.cwd()
 DATAPATH: Path = BASEPATH.joinpath("data")
-MAINCSVPATH: Path = DATAPATH.joinpath("contacts.csv")  # Take this as user input in future refinement
+MAINCSVPATH: Path = DATAPATH.joinpath(
+    "contacts.csv"
+)  # Take this as user input in future refinement
 # data_path : str = "data/"
 # csv_path: str = "data/contacts.csv"
 # print(f"CSVPATH = {type(MAINCSVPATH)}")
@@ -26,11 +32,9 @@ MAINCSVPATH: Path = DATAPATH.joinpath("contacts.csv")  # Take this as user input
 con: duckdb.DuckDBPyConnection | None = get_duck_connection()
 if con:
     duck_read(con, MAINCSVPATH)
+    # duck_to_csv(con, DATAPATH)
 
     # print(type(ddb))
-    # print(ddb)
-    # ddb.show()
-
     # print(ddb.types)
     # print(ddb.columns)
 
@@ -54,18 +58,6 @@ if con:
         )
         # ddb2.
         ddb2.show()
-        duck_to_csv(con, DATAPATH)
-
-
-        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql_query('SELECT * FROM ddb2 WHERE Birthday NOTNULL OR \"Event 1 - Value\" NOTNULL OR \"Custom Field 1 - Value\" NOTNULL')
-        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql('SELECT * FROM ddb2 WHERE Birthday NOTNULL ')
-
-        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.bool_and('Birthday')
-        # ddb3.show()
-
-        # print(ddb2.describe())
-        # duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
-        # ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
 
         # SELECT     "First Name",
         #     "Middle Name",
@@ -81,3 +73,15 @@ if con:
         #     OR "Event 1 - Value" NOTNULL
         #     OR "Custom Field 1 - Label" NOTNULL
         #     OR "Custom Field 1 - Value" NOTNULL;
+
+        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql_query('SELECT * FROM ddb2 WHERE Birthday NOTNULL OR \"Event 1 - Value\" NOTNULL OR \"Custom Field 1 - Value\" NOTNULL')
+        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.sql('SELECT * FROM ddb2 WHERE Birthday NOTNULL ')
+
+        # ddb3: duckdb.duckdb.DuckDBPyRelation = ddb2.bool_and('Birthday')
+        # ddb3.show()
+
+        # print(ddb2.describe())
+        # duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
+        # ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
+
+    con.close()

@@ -76,19 +76,30 @@ def duck_run_query(
         return None
 
 
-def duck_to_csv(con: duckdb.DuckDBPyConnection, export_base_path: Path, export_filename:str = None) -> str | None:
+def duck_to_csv(
+    con: duckdb.DuckDBPyConnection,
+    export_base_path: Path,
+    export_filename: str | None = None,
+) -> Path | None:
     """Create new csv with all data in DuckDB contacts table"""
     try:
-        output_path: Path = None
+        output_path: Path | None = None
         if export_filename:
             output_path = export_base_path.joinpath(export_filename)
         else:
             date_time = datetime.now().strftime("%Y%m%d_%H%M%S")
             output_path = export_base_path.joinpath(f"new_contacts_{date_time}.csv")
 
-        con.execute(f"COPY (SELECT * FROM contacts) TO '{output_path}' (FORMAT CSV, HEADER TRUE)")
+        con.execute(
+            f"COPY (SELECT * FROM contacts) TO '{output_path}' (FORMAT CSV, HEADER TRUE)"
+        )
         logging.info(f"contacts table exported to {output_path}")
+        return output_path
 
     except Exception as ex:
         logging.exception(f"Failed to export DuckDB contacts to csv. {ex}")
         return None
+
+
+def duck_query_to_csv():
+    pass
