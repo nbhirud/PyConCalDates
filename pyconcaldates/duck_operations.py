@@ -16,8 +16,8 @@ from pathlib import Path
 # print(arr)
 # df.select_dtypes(include=['datetime64'])
 
-
 class ContactsDB:
+
     def __init__(self):
         try:
             self.con = duckdb.connect(database=":memory:")  # in-memory db
@@ -26,9 +26,13 @@ class ContactsDB:
         except Exception as ex:
             logging.exception(f"Connection to in-memory DuckDB unsuccessful. {ex}")
 
-    def duck_load_csv_inmemory(
-        self, csv_path: Path
-    ):  # -> duckdb.duckdb.DuckDBPyRelation:
+    def  __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.con.close()
+
+    def duck_load_csv_inmemory(self, csv_path: Path):  # -> duckdb.duckdb.DuckDBPyRelation:
         """Read csv and load into the in-memory DuckDB"""
         try:
             # ddb = duckdb.from_csv_auto(csv_path)
@@ -50,9 +54,7 @@ class ContactsDB:
             logging.exception(f"Failed to run the query on DuckDB. {ex}")
             return None
 
-    def duck_to_csv(
-        self, export_base_path: Path, export_filename: str | None = None
-    ) -> Path | None:
+    def duck_to_csv(self, export_base_path: Path,export_filename: str | None = None) -> Path | None:
         """Create new csv with all data in DuckDB contacts table"""
         try:
             output_path: Path | None = None
@@ -74,7 +76,6 @@ class ContactsDB:
 
     def duck_query_to_csv(self):
         pass
-
 
 # # TODO - dbckdb singleton connection
 # def get_duck_connection() -> duckdb.DuckDBPyConnection | None:
