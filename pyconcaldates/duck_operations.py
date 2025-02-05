@@ -31,7 +31,7 @@ def get_duck_connection() -> duckdb.DuckDBPyConnection | None:
         return None
 
 
-def duck_read(
+def duck_load_csv_inmemory(
     con: duckdb.DuckDBPyConnection, csv_path: Path
 ):  # -> duckdb.duckdb.DuckDBPyRelation:
     """Read csv and load into the in-memory DuckDB"""
