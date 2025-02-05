@@ -1,5 +1,5 @@
 from pyconcaldates.duck_operations import (
-    duck_read,
+    duck_load_csv_inmemory,
     get_duck_connection,
     duck_run_query,
 )  # , duck_to_csv
@@ -31,7 +31,7 @@ MAINCSVPATH: Path = DATAPATH.joinpath(
 
 con: duckdb.DuckDBPyConnection | None = get_duck_connection()
 if con:
-    duck_read(con, MAINCSVPATH)
+    duck_load_csv_inmemory(con, MAINCSVPATH)
     # duck_to_csv(con, DATAPATH)
 
     # print(type(ddb))
