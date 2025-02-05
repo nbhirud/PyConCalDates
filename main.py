@@ -1,8 +1,4 @@
-from pyconcaldates.duck_operations import (
-    duck_load_csv_inmemory,
-    get_duck_connection,
-    duck_run_query,
-)  # , duck_to_csv
+from pyconcaldates.duck_operations import ContactsDB
 
 # from duckdb.duckdb import DuckDBPyRelation
 import duckdb
@@ -28,10 +24,10 @@ MAINCSVPATH: Path = DATAPATH.joinpath(
 
 # ddb: duckdb.duckdb.DuckDBPyRelation = duck_read(csv_path)
 # ddb = duckdb.duckdb.DuckDBPyRelation = duck_read_local_db()
-
-con: duckdb.DuckDBPyConnection | None = get_duck_connection()
-if con:
-    duck_load_csv_inmemory(con, MAINCSVPATH)
+contacts_db = ContactsDB()
+# con: duckdb.DuckDBPyConnection | None = get_duck_connection()
+if True:
+    contacts_db.duck_load_csv_inmemory(MAINCSVPATH)
     # duck_to_csv(con, DATAPATH)
 
     # print(type(ddb))
@@ -40,8 +36,8 @@ if con:
 
     # FIXME - mypy error: Name "duckdb.duckdb.DuckDBPyRelation" is not defined  [name-defined]
     # ddb: duckdb.duckdb.DuckDBPyRelation  = con.sql("""SELECT * FROM contacts;""")
-    ddb: duckdb.duckdb.DuckDBPyRelation | None = duck_run_query(
-        con, """SELECT * FROM contacts;"""
+    ddb: duckdb.duckdb.DuckDBPyRelation | None = contacts_db.duck_run_query(
+        """SELECT * FROM contacts;"""
     )
 
     if ddb:
@@ -84,4 +80,4 @@ if con:
         # duckdb.sql("SELECT * FROM ddb2 WHERE ").show()
         # ddb2.filter('Birthday NOTNULL').filter('\"Event 1 - Value\" NOTNULL').filter('\"Custom Field 1 - Value\" NOTNULL').show()
 
-    con.close()
+    contacts_db.con.close()
